@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Inter, Geist_Mono } from "next/font/google";
+// @ts-ignore: CSS module declarations handled by Next.js
 import "./globals.css";
-import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { Toaster } from "@/components/ui/sonner";
 import { ClerkProvider } from "@clerk/nextjs";
-import { TRPCReactProvider } from "@/trpc/client";
+
 
 const inter = Inter({
   variable: "--font-inter",
@@ -31,18 +31,14 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <TRPCReactProvider>
-        <html lang="en">
-          <body
-            className={`${inter.variable} ${geistMono.variable} antialiased`}
-          >
-            <NuqsAdapter>
-              {children}
-            </NuqsAdapter>
-            <Toaster />
-          </body>
-        </html>
-      </TRPCReactProvider>
+      <html lang="en">
+        <body
+          className={`${inter.variable} ${geistMono.variable} antialiased`}
+        >
+          {children}
+          <Toaster />
+        </body>
+      </html>
     </ClerkProvider>
   );
 }
