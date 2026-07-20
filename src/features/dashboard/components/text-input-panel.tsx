@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
+
 import {  TEXT_MAX_LENGTH} from "@/features/text-to-speech/data/constants";
 // Cost per character used for estimating price (USD per character)
 const COST_PER_UNIT = 0.0001;

@@ -14,7 +14,7 @@ export const quickActions: QuickAction[] = [
   },
 
 {
-    title: "Record an Ad",
+    title: "Record an Advertisement",
     description: "Create professional advertisements with lifelike AI voices",
     gradient: "from-pink-400 to-pink-100",
     href: "/text-to-speech?text=Introducing BrightBean Coffee — the smoothest roast you'll ever taste. Sourced from high-altitude farms, slow-roasted to perfection, and delivered fresh to your door every single week. Wake up to something extraordinary. Try BrightBean today and get your first bag free.",
