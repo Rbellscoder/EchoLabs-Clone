@@ -4,6 +4,7 @@ import { Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { ClerkProvider } from "@clerk/nextjs";
+import { TRPCReactProvider } from "@trpc/client";
 
 
 const inter = Inter({
@@ -31,6 +32,7 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
+      <TRPCReactProvider>
       <html lang="en">
         <body
           className={`${inter.variable} ${geistMono.variable} antialiased`}
@@ -39,6 +41,7 @@ export default function RootLayout({
           <Toaster />
         </body>
       </html>
+      </TRPCReactProvider>
     </ClerkProvider>
   );
 }
