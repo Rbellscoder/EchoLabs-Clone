@@ -50,3 +50,6 @@ next-env.d.ts
 __pychache__
 
 chatterbox_.py
+
+# Sentry Config File
+.env.sentry-build-plugin
