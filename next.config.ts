@@ -3,15 +3,19 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
+  devIndicators: false,
+  experimental: {
+    proxyClientMaxBodySize: "20mb",
+  },
 };
 
 export default withSentryConfig(nextConfig, {
   // For all available options, see:
   // https://www.npmjs.com/package/@sentry/webpack-plugin#options
 
-  org: "github-s1h",
+  org: "enra-doo-jn",
 
-  project: "echo-labs",
+  project: "resonance-app",
 
   // Only print logs for uploading source maps in CI
   silent: !process.env.CI,
@@ -40,5 +44,5 @@ export default withSentryConfig(nextConfig, {
       // Automatically tree-shake Sentry logger statements to reduce bundle size
       removeDebugLogging: true,
     },
-  }
+  },
 });
