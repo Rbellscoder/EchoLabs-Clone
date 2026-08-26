@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { Inter, Geist_Mono } from "next/font/google";
-// @ts-ignore: CSS module declarations handled by Next.js
+// @ts-expect-error Next.js handles this stylesheet import at build time.
 import "./globals.css";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { Toaster } from "@/components/ui/sonner";
 import { ClerkProvider } from "@clerk/nextjs";
-import { TRPCReactProvider } from "@trpc/client";
-
+import { TRPCReactProvider } from "@/trpc/client";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -19,10 +19,10 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "ECHOING",
-    template: "%s | ECHOING"
+    default: "Resonance",
+    template: "%s | Resonance"
   },
-  description: "AI-powered text-to-speech and voice cloning",
+  description: "AI-powered text-to-speech and voice cloning platform",
 };
 
 export default function RootLayout({
@@ -33,14 +33,16 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <TRPCReactProvider>
-      <html lang="en">
-        <body
-          className={`${inter.variable} ${geistMono.variable} antialiased`}
-        >
-          {children}
-          <Toaster />
-        </body>
-      </html>
+        <html lang="en">
+          <body
+            className={`${inter.variable} ${geistMono.variable} antialiased`}
+          >
+            <NuqsAdapter>
+              {children}
+            </NuqsAdapter>
+            <Toaster />
+          </body>
+        </html>
       </TRPCReactProvider>
     </ClerkProvider>
   );
