@@ -8,7 +8,8 @@ import { VoicePreviewPlaceholder } from "@/features/text-to-speech/components/vo
 import { SettingsPanel } from "@/features/text-to-speech/components/settings-panel";
 import {
   TextToSpeechForm,
-  defaultTTSFormValues,
+...defaultTTSFormValues,
+  defaultTTSValues,
   type TTSFormValues
 } from "@/features/text-to-speech/components/text-to-speech-form";
 import { TTSVoicesProvider } from "../contexts/tts-voices-context";
@@ -37,6 +38,7 @@ export function TextToSpeechView({
 
   const defaultValues: TTSFormValues = {
     ...defaultTTSFormValues,
+    ...defaultTTSValues,
     ...initialValues,
     voiceId: resolvedVoiceId,
   };

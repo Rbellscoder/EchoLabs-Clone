@@ -1,57 +1,45 @@
-import { auth } from "@clerk/nextjs/server";
-import { prisma } from "@/lib/db";
-import { getSignedAudioUrl } from "@/lib/r2";
+"use client";
 
-export async function GET(
-  _request: Request,
-  { params }: { params: Promise<{ voiceId: string }> },
-) {
-  const { userId, orgId } = await auth();
+import { useEffect, useRef, useState } from "react";
 
-  if (!userId || !orgId) {
-    return new Response("Unauthorized", { status: 401 });
-  }
+export function useAudioPlayback(file: File | Blob | null | undefined) {
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
-  const { voiceId } = await params;
+  useEffect(() => {
+    if (!file) {
+      setIsPlaying(false);
+      return;
+    }
 
-  const voice = await prisma.voice.findUnique({
-    where: { id: voiceId },
-    select: {
-      variant: true,
-      orgId: true,
-      r2ObjectKey: true,
-    },
-  });
+    const url = URL.createObjectURL(file);
+    const audio = new Audio(url);
+    audioRef.current = audio;
 
-  if (!voice) {
-    return new Response("Not found", { status: 404 });
-  }
+    const handleEnded = () => setIsPlaying(false);
+    audio.addEventListener("ended", handleEnded);
 
-  if (voice.variant === "CUSTOM" && voice.orgId !== orgId) {
-    return new Response("Not found", { status: 404 });
-  }
+    return () => {
+      audio.pause();
+      audio.removeEventListener("ended", handleEnded);
+      URL.revokeObjectURL(url);
+      audioRef.current = null;
+      setIsPlaying(false);
+    };
+  }, [file]);
 
-  if (!voice.r2ObjectKey) {
-    return new Response("Voice audio is not available yet", { status: 409 });
-  }
+  const togglePlay = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
 
-  const signedUrl = await getSignedAudioUrl(voice.r2ObjectKey);
-  const audioResponse = await fetch(signedUrl);
+    if (isPlaying) {
+      audio.pause();
+      setIsPlaying(false);
+    } else {
+      audio.play();
+      setIsPlaying(true);
+    }
+  };
 
-  if (!audioResponse.ok) {
-    return new Response("Failed to fetch voice audio", { status: 502 });
-  }
-
-  const contentType = 
-    audioResponse.headers.get("content-type") || "audio/wav";
-
-  return new Response(audioResponse.body, {
-    headers: {
-      "Content-Type": contentType,
-      "Cache-Control":
-        voice.variant === "SYSTEM"
-          ? "public, max-age=86400"
-          : "private, max-age=3600",
-    },
-  });
-};
+  return { isPlaying, togglePlay };
+}
