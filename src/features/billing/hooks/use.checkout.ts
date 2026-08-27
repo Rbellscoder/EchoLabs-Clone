@@ -1,20 +1,26 @@
-import { useCallback } from "react";
-import { useMutation } from "@tanstack/react-query";
+"use client";
+
+import { useState, useCallback } from "react";
 import { useTRPC } from "@/trpc/client";
+import { useMutation } from "@tanstack/react-query";
 
 export function useCheckout() {
   const trpc = useTRPC();
-  const mutation = useMutation(
-    trpc.billing.createCheckout.mutationOptions({})
+  const [isLoading, setIsLoading] = useState(false);
+
+  const createCheckout = useMutation(
+    trpc.billing.createCheckout.mutationOptions({}),
   );
 
-    const checkout = useCallback(() => {
-    mutation.mutate(undefined, {
-      onSuccess: (data) => {
-        window.location.href = data.checkoutUrl;
-      },
-    });
-  }, [mutation]);
+  const checkout = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const { url } = await createCheckout.mutateAsync({});
+      if (url) window.location.href = url;
+    } finally {
+      setIsLoading(false);
+    }
+  }, [createCheckout]);
 
-  return { checkout, isPending: mutation.isPending };
-};
+  return { checkout, isLoading };
+}

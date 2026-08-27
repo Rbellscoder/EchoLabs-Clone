@@ -16,7 +16,6 @@ export function VoicesList({ title, voices }: VoicesListProps) {
 
         <div className="flex flex-col items-center justify-center gap-3 py-12">
           <div className="relative flex h-14 w-32 items-center justify-center">
-
             <div className="absolute left-0 -rotate-30 rounded-full bg-muted p-4">
               <Volume2 className="size-5 text-muted-foreground" />
             </div>
@@ -28,7 +27,6 @@ export function VoicesList({ title, voices }: VoicesListProps) {
             <div className="absolute right-0 rotate-30 rounded-full bg-muted p-4">
               <AudioLines className="size-5 text-muted-foreground" />
             </div>
-
           </div>
 
           <p className="text-lg font-semibold tracking-tight text-foreground">
@@ -40,8 +38,8 @@ export function VoicesList({ title, voices }: VoicesListProps) {
           </p>
         </div>
       </div>
-    )
-  };
+    );
+  }
 
   return (
     <div className="space-y-4">
@@ -53,4 +51,4 @@ export function VoicesList({ title, voices }: VoicesListProps) {
       </div>
     </div>
   );
-};
+}
