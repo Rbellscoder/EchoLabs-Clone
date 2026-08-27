@@ -170,7 +170,7 @@ export async function POST(request: Request) {
     .ingest({
       events: [
         {
-          name: env.POLAR_METER_VOICE_CREATION,
+          name: "voice_creation",
           externalCustomerId: orgId,
           metadata: {},
           timestamp: new Date(),
