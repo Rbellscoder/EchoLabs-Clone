@@ -6,7 +6,7 @@ import { useTRPC } from "@/trpc/client";
 import { useQueryState } from "nuqs";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
-import { VoicesList } from "../components/voices-list";
+import { VoicesList } from "../components/voice-list";
 import { voicesSearchParams } from "../lib/params";
 import { VoicesToolbar } from "../components/voices-toolbar";
 
