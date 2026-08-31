@@ -31,6 +31,10 @@ export const defaultTTSValues: TTSFormValues = {
   repetitionPenalty: 1.2,
 };
 
+export const defaultTTSFormValues = {
+  ...defaultTTSValues,
+};
+
 export const ttsFormOptions = formOptions({
   defaultValues: defaultTTSValues,
 });
