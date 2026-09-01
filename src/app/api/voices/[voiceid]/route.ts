@@ -4,7 +4,7 @@ import { getSignedAudioUrl } from "@/lib/r2";
 
 export async function GET(
   _request: Request,
-  { params }: { params: Promise<{ voiceId: string }> },
+  { params }: { params: Promise<{ voiceid: string }> },
 ) {
   const { userId, orgId } = await auth();
 
@@ -12,10 +12,10 @@ export async function GET(
     return new Response("Unauthorized", { status: 401 });
   }
 
-  const { voiceId } = await params;
+  const { voiceid } = await params;
 
   const voice = await prisma.voice.findUnique({
-    where: { id: voiceId },
+    where: { id: voiceid },
     select: {
       variant: true,
       orgId: true,
